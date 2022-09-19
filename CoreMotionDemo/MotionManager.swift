@@ -12,23 +12,40 @@ class MotionManager: ObservableObject {
     let motionManager = CMMotionManager()
     
     // 取得したデータを一時的に保存する
-    @Published var x = "0.0"
-    @Published var y = "0.0"
-    @Published var z = "0.0"
+    // 加速度
+    @Published var acceleration_x = "0.0"
+    @Published var acceleration_y = "0.0"
+    @Published var acceleration_z = "0.0"
+    // 回転速度
+    @Published var rotation_x = "0.0"
+    @Published var rotation_y = "0.0"
+    @Published var rotation_z = "0.0"
+    // 姿勢
+    @Published var attitude_pitch = "0.0"
+    @Published var attitude_roll = "0.0"
+    @Published var attitude_yaw = "0.0"
     
     // 取得したデータを保存する配列
-    var accelValueArray = [String]()
+    var accelValueArray = [String](
+        ["acceleration_x,acceleration_y,acceleration_z,rotation_x,rotation_y,rotation_z,attitude_pitch,attitude_roll,attitude_yaw"]
+    )
     
     // ボタンが押されたかを判定する
     @Published var isStarted = false
     
     // データの取得
     private func getMotionData(deviceMotion: CMDeviceMotion) {
-        x = String(deviceMotion.userAcceleration.x)
-        y = String(deviceMotion.userAcceleration.y)
-        z = String(deviceMotion.userAcceleration.z)
+        acceleration_x = String(deviceMotion.userAcceleration.x)
+        acceleration_y = String(deviceMotion.userAcceleration.y)
+        acceleration_z = String(deviceMotion.userAcceleration.z)
+        rotation_x = String(deviceMotion.rotationRate.x)
+        rotation_y = String(deviceMotion.rotationRate.y)
+        rotation_z = String(deviceMotion.rotationRate.z)
+        attitude_pitch = String(deviceMotion.attitude.pitch)
+        attitude_roll = String(deviceMotion.attitude.roll)
+        attitude_yaw = String(deviceMotion.attitude.yaw)
         
-        let geteData = x+","+y+","+z
+        let geteData = acceleration_x+","+acceleration_y+","+acceleration_z+","+rotation_x+","+rotation_y+","+rotation_z+","+attitude_pitch+","+attitude_roll+","+attitude_yaw
         accelValueArray.append(geteData)
     }
     
